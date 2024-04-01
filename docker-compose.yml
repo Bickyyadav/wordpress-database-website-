@@ -1,0 +1,38 @@
+version: '3.1'
+
+services: 
+  wordpress-website:
+    image: wordpress:latest
+    restart: always 
+    ports:
+      - 3000:80
+    environment: 
+      WORDPRESS_DB_HOST: WORDPRESS_db  # database name from below 
+      WORDPRESS_DB_USER: Bickyyadav  
+      WORDPRESS_DB_PASSWORD: Bicky@5234
+      WORDPRESS_DB_NAME: mydb  # database name 
+    volumes:
+      - wordpress-data:/var/www/html
+    networks:
+      - milkyway
+    
+  WORDPRESS_db:
+    image: mysql:5.7
+    restart: always
+    environment: 
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: Bickyyadav
+      MYSQL_PASSWORD: Bicky@5234
+      MYSQL_ROOT_PASSWORD: "1"
+    volumes:
+      - db-data:/var/lib/mysql  # Corrected to use a list format
+    networks:
+      - milkyway
+
+volumes:
+  wordpress-data:
+  db-data:
+
+networks:
+  milkyway:
+    driver: bridge
